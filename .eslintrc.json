@@ -6,10 +6,11 @@
     "extends": [
         "plugin:react/recommended",
         "standard-with-typescript",
+        "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-        "some-other-config-you-use",
-        "prettier"
+        "prettier",
+        "plugin:prettier/recommended"
     ],
     "overrides": [
     ],
@@ -19,15 +20,20 @@
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
-        }
+        },
+        "project": ["tsconfig.json"]
     },
+    "ignorePatterns": [".eslintrc.json"],
     "plugins": [
         "react",
         "@typescript-eslint",
         "prettier"
     ],
     "rules": {
-        "semi": 2,
+        "semi": "off",
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/space-before-function-paren": "off",
+        // "@typescript-eslint/semi": ["error", "always"],
         "@typescript-eslint/explicit-function-return-type": [
             "warn",
             {"allowTypedFunctionExpressions": true}

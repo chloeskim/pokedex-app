@@ -3,10 +3,11 @@
     "semi": true,
     "useTabs": false,
     "tabWidth": 2,
-    "trailingComma": "es5",
-    "printWidth": 80,
+    "trailingComma": "all",
+    "printWidth": 160,
     "orderedImports": true,
     "bracketSpacing": true,
     "jsxBracketSameLine": false,
-    "arrowParens": "avoid"
+    "arrowParens": "avoid",
+    "parser": "typescript"
 }
