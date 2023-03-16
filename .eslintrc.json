@@ -33,14 +33,15 @@
         "semi": "off",
         "@typescript-eslint/semi": "off",
         "@typescript-eslint/space-before-function-paren": "off",
-        // "@typescript-eslint/semi": ["error", "always"],
         "@typescript-eslint/explicit-function-return-type": [
             "warn",
             {"allowTypedFunctionExpressions": true}
         ],
         "prettier/prettier": [
-            "error", {
-                "endOfLine": "auto"
+            "error", 
+            {
+                "endOfLine": "auto",
+                "useTabs": false
             }
         ]
     },
