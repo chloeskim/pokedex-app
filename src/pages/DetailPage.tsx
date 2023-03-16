@@ -2,12 +2,12 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-type Params = {
+interface Params {
   id: string;
-};
+}
 
 const DetailPage: React.FC = () => {
-  const { id } = useParams<Params>();
+  const { id } = useParams<Params | any>();
   return <div>Detail Page id: {id}</div>;
 };
 
