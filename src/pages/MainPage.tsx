@@ -1,6 +1,6 @@
 // Pokemon List
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import PokemonList from '../components/PokemonList';
 
 const Base = styled.div`

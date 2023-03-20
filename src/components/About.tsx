@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { type Ability, type Color, type Type } from '../types';
 import { mapTypesToHex } from '../utils';
 import Abilities from './Abilities';

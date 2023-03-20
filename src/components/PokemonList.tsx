@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import usePokemon from './../hooks/usePokemon';
 import { type ListResponse } from './../types/index';
 
