@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import usePokemon from './../hooks/usePokemon';
+import { type ListResponse } from './../types/index';
 
 const Base = styled.div`
   margin-top: 24px;
@@ -43,21 +45,45 @@ const Index = styled.p`
   font-weight: bold;
   color: #d1d5db;
 `;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 180px);
+`;
+
+const Loading = styled.img``;
+
 // Ref:https://github.com/PokeAPI/sprites
 const getImageUrl = (index: number): string =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`;
 
 const PokemonList: React.FC = () => {
+  const { isLoading, isError, data } = usePokemon<ListResponse>();
+  const formatNumbering = (index: number): string => {
+    return `#${String(index).padStart(3, '0')}`;
+  };
+
   return (
     <Base>
-      <List>
-        <ListItem>
-          <Image src={getImageUrl(1)} />
-          {/* TODO: API */}
-          <Name>Bulbasaur</Name>
-          <Index>#001</Index>
-        </ListItem>
-      </List>
+      {isLoading || isError ? (
+        <LoadingWrapper>
+          <Loading src="/loading.gif" alt="loading" />
+        </LoadingWrapper>
+      ) : (
+        <List>
+          {data?.data.results.map((pokemon, idx) => (
+            <ListItem key={pokemon.name}>
+              <Image src={getImageUrl(idx + 1)} />
+              {/* TODO: API */}
+              <Name>{pokemon.name}</Name>
+              <Index>{formatNumbering(idx + 1)}</Index>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </Base>
   );
 };
