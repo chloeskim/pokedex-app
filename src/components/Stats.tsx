@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { type Stat, type Color } from './../types/index';
 import { mapColorToHex } from './../utils';
 
@@ -58,23 +58,28 @@ const Gauge = styled.div<{ percentage: number; color: string }>`
 `;
 
 interface Props {
-  stats: Stat[];
-  color: Color;
+  isLoading?: boolean;
+  stats?: Stat[];
+  color?: Color;
 }
 
-// TODO: API
 const Stats: React.FC<Props> = ({ color, stats }) => {
   return (
     <Base>
       <Title color={mapColorToHex(color?.name)}>Base Stats</Title>
       <List>
-        <ListItem>
-          <Name>Name</Name>
-          <Amount>Amount</Amount>
-          <GaugeWrapper>
-            <Gauge color={mapColorToHex(color?.name)} />
-          </GaugeWrapper>
-        </ListItem>
+        {stats?.map(({ stat, baseStat }, idx) => (
+          <ListItem key={idx}>
+            <Name>{stat.name}</Name>
+            <Amount>{baseStat}</Amount>
+            <GaugeWrapper>
+              <Gauge
+                color={mapColorToHex(color?.name)}
+                percentage={(baseStat / 255) * 100}
+              />
+            </GaugeWrapper>
+          </ListItem>
+        ))}
       </List>
     </Base>
   );
