@@ -7,7 +7,7 @@ const pokemonApi = async (id?: string) =>
     params: { limit: 151 },
   });
 
-const usePokemon = <T,>(
+const usePokemon = <T>(
   id?: string,
 ): UseQueryResult<AxiosResponse<T>, Error> => {
   return useQuery(
