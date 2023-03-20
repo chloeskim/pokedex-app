@@ -100,15 +100,18 @@ const PokemonInfo: React.FC<Props> = ({ id, name, types, color }) => {
       </ImageWrapper>
       <InfoWrapper>
         <Name>{name}</Name>
-        <Index>{formatNumbering(id)}</Index>
+        {id.length > 0 && <Index>{formatNumbering(id)}</Index>}
       </InfoWrapper>
-      <TypeList>
-        {types?.map(({ type }, idx) => (
-          <TypeWrapper key={idx} color={mapTypesToHex(type.name)}>
-            <TypeInfo src={`/assets/${type.name}.svg`} />
-          </TypeWrapper>
-        ))}
-      </TypeList>
+      {types != null && (
+        <TypeList>
+          {types.map(({ type }, idx) => (
+            <TypeWrapper key={idx} color={mapTypesToHex(type.name)}>
+              <TypeInfo src={`/assets/${type.name}.svg`} />
+            </TypeWrapper>
+          ))}
+        </TypeList>
+      )}
+
       <ThumbnailImageWrapper>
         <ThumbnailImage
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}

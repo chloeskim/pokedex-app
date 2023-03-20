@@ -1,5 +1,6 @@
 import axios, { type AxiosResponse } from 'axios';
-import { useQueries, type UseQueryResult } from 'react-query';
+import { useQueries } from 'react-query';
+import { type UseQueryResult } from 'react-query/types/react/types';
 import { type Ability, type AbilityResponse } from '../types';
 
 type ReturnType = AxiosResponse<AbilityResponse>;

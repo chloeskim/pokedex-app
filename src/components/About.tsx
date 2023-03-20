@@ -3,8 +3,9 @@ import styled from '@emotion/styled/macro';
 import { type Ability, type Color, type Type } from '../types';
 import { mapTypesToHex } from '../utils';
 import Abilities from './Abilities';
+import PokedexData from './PokedexData';
 
-const Base = styled.div`
+const Base = styled.article`
   padding: 20px;
 `;
 
@@ -56,41 +57,6 @@ const Image = styled.img`
   object-fit: contain;
 `;
 
-const InfoContainerWrapper = styled.div`
-  margin-top: 32px;
-`;
-
-const Title = styled.h4<{ color: string }>`
-  margin: 0;
-  padding: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: ${({ color }) => color};
-`;
-
-const InfoContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 20px;
-  row-gap: 12px;
-`;
-
-const InfoItem = styled.div`
-  display: grid;
-  grid-template-columns: repeat() (2, minmax() (0, 1fr));
-`;
-
-const InfoItemLabel = styled.span`
-  font-weight: 600;
-  color: #374151;
-  font-size: 12px;
-`;
-
-const InfoItemValue = styled.span<{ color: string }>`
-  color: ${({ color }) => color};
-  font-size: 12px;
-`;
-
 interface Props {
   isLoading: boolean;
   color?: Color;
@@ -121,67 +87,47 @@ const About: React.FC<Props> = ({
   abilities,
 }) => {
   const rarity =
-    isLegendary ?? false
+    isLegendary === true
       ? 'Legendary'
-      : isMythical ?? false
+      : isMythical === true
       ? 'Mythical'
       : 'Normal';
 
   return (
     <Base>
       <FlavorText>{flavorText}</FlavorText>
-      <TypeList>
-        {types?.map(({ type }, idx) => (
-          <TypeWrapper key={idx} color={mapTypesToHex(type.name)}>
-            <TypeImage src={`/assets/${type.name}.svg`} />
-            <TypeLabel>{type.name.toUpperCase()}</TypeLabel>
-          </TypeWrapper>
-        ))}
-      </TypeList>
-      <InfoContainerWrapper>
-        <Title color={mapTypesToHex(color?.name)}>Pokédex Data</Title>
-        <InfoContainer>
-          <InfoItem>
-            <InfoItemLabel>Height</InfoItemLabel>
-            <InfoItemValue color={mapTypesToHex(color?.name)}>
-              {height}
-            </InfoItemValue>
-          </InfoItem>
-          <InfoItem>
-            <InfoItemLabel>Weight</InfoItemLabel>
-            <InfoItemValue color={mapTypesToHex(color?.name)}>
-              {weight}
-            </InfoItemValue>
-          </InfoItem>
-          <InfoItem>
-            <InfoItemLabel>Gender</InfoItemLabel>
-            <InfoItemValue color={mapTypesToHex(color?.name)}>
-              {genderRate === -1 ? 'Unknown' : 'Male / Female'}
-            </InfoItemValue>
-          </InfoItem>
-          <InfoItem>
-            <InfoItemLabel>Growth Rate</InfoItemLabel>
-            <InfoItemValue color={mapTypesToHex(color?.name)}>
-              {growthRate}
-            </InfoItemValue>
-          </InfoItem>
-          <InfoItem>
-            <InfoItemLabel>Base Exp</InfoItemLabel>
-            <InfoItemValue color={mapTypesToHex(color?.name)}>
-              {baseExp}
-            </InfoItemValue>
-          </InfoItem>
-          <InfoItem>
-            <InfoItemLabel>Rarity</InfoItemLabel>
-            <InfoItemValue color={mapTypesToHex(color?.name)}>
-              {rarity}
-            </InfoItemValue>
-          </InfoItem>
-        </InfoContainer>
-      </InfoContainerWrapper>
-      {abilities != null && <Abilities abilities={abilities} />}
+      {isLoading ? (
+        <ImageWrapper>
+          <Image src="/loading.gif" />
+        </ImageWrapper>
+      ) : (
+        <>
+          {types != null && (
+            <TypeList>
+              {types.map(({ type }, idx) => (
+                <TypeWrapper key={idx} color={mapTypesToHex(type.name)}>
+                  <TypeImage src={`/assets/${type.name}.svg`} />
+                  <TypeLabel>{type.name.toUpperCase()}</TypeLabel>
+                </TypeWrapper>
+              ))}
+            </TypeList>
+          )}
+          <PokedexData
+            weight={weight}
+            height={height}
+            genderRate={genderRate}
+            growthRate={growthRate}
+            baseExp={baseExp}
+            rarity={rarity}
+            color={color}
+          />
+          {abilities != null && (
+            <Abilities abilities={abilities} color={color} />
+          )}
+        </>
+      )}
     </Base>
   );
 };
 
-export default About;
+export default React.memo(About);

@@ -1,5 +1,6 @@
 // Detail view of selected Pokemon
 import React, { useMemo, useState } from 'react';
+import styled from '@emotion/styled/macro';
 import { useParams } from 'react-router-dom';
 import PokemonInfo from '../components/PokemonInfo';
 import Tabs from '../components/Tabs';
@@ -10,11 +11,16 @@ import Evolution from './../components/Evolution';
 import Stats from '../components/Stats';
 import About from '../components/About';
 
-interface Params {
-  id: string;
-}
-
 type Tab = 'about' | 'stats' | 'evolution';
+
+const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TabsWrapper = styled.div`
+  margin: 24px auto 0;
+`;
 
 const DetailPage: React.FC = () => {
   const { id } = useParams();
@@ -62,13 +68,18 @@ const DetailPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <Container>
       <PokemonInfo id={id as string} name={name} types={types} color={color} />
-      <Tabs tab={selectedTab} onClick={handleClick} />
+      <TabsWrapper>
+        <Tabs color={color} tab={selectedTab} onClick={handleClick} />
+      </TabsWrapper>
+
       {selectedTab === 'about' && (
         <About
           isLoading={pokemonResult.isLoading || pokemonResult.isLoading}
           color={color}
+          growthRate={growthRate}
+          flavorText={flavorText}
           genderRate={genderRate}
           isLegendary={isLegendary}
           isMythical={isMythical}
@@ -94,7 +105,7 @@ const DetailPage: React.FC = () => {
           url={evolutionChainUrl}
         />
       )}
-    </div>
+    </Container>
   );
 };
 
