@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import styled from '@emotion/styled/macro';
 import { type Stat, type Color } from './../types/index';
@@ -58,7 +59,7 @@ const Gauge = styled.div<{ percentage: number; color: string }>`
 `;
 
 interface Props {
-  isLoading?: boolean;
+  isLoading: boolean;
   stats?: Stat[];
   color?: Color;
 }
@@ -68,14 +69,16 @@ const Stats: React.FC<Props> = ({ color, stats }) => {
     <Base>
       <Title color={mapColorToHex(color?.name)}>Base Stats</Title>
       <List>
-        {stats?.map(({ stat, baseStat }, idx) => (
+        {stats?.map(({ stat, base_stat }, idx) => (
           <ListItem key={idx}>
-            <Name>{stat.name}</Name>
-            <Amount>{baseStat}</Amount>
+            <Name>
+              {stat.name === 'hp' ? stat.name.toUpperCase() : stat.name}
+            </Name>
+            <Amount>{base_stat}</Amount>
             <GaugeWrapper>
               <Gauge
+                percentage={(base_stat / 255) * 100}
                 color={mapColorToHex(color?.name)}
-                percentage={(baseStat / 255) * 100}
               />
             </GaugeWrapper>
           </ListItem>
