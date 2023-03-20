@@ -22,7 +22,7 @@ export interface Type {
 }
 
 export interface Stat {
-  base_stat: number;
+  baseStat: number;
   effort: number;
   stat: {
     name: string;
