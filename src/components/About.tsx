@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { type Ability, type Color, type Type } from '../types';
 import { mapTypesToHex } from '../utils';
+import Abilities from './Abilities';
 
 const Base = styled.div`
   padding: 20px;
@@ -30,14 +31,17 @@ const TypeList = styled.div`
     margin-left: 8px;
   }
 `;
+
 const TypeImage = styled.img`
   height: 12px;
 `;
+
 const TypeLabel = styled.span`
   margin-left: 4px;
   color: #fff;
   font-size: 10px;
 `;
+
 const ImageWrapper = styled.div`
   width: 100%;
   height: 160px;
@@ -51,9 +55,11 @@ const Image = styled.img`
   height: 120px;
   object-fit: contain;
 `;
+
 const InfoContainerWrapper = styled.div`
   margin-top: 32px;
 `;
+
 const Title = styled.h4<{ color: string }>`
   margin: 0;
   padding: 0;
@@ -61,21 +67,25 @@ const Title = styled.h4<{ color: string }>`
   font-weight: 600;
   color: ${({ color }) => color};
 `;
+
 const InfoContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin-top: 20px;
   row-gap: 12px;
 `;
+
 const InfoItem = styled.div`
   display: grid;
   grid-template-columns: repeat() (2, minmax() (0, 1fr));
 `;
+
 const InfoItemLabel = styled.span`
   font-weight: 600;
   color: #374151;
   font-size: 12px;
 `;
+
 const InfoItemValue = styled.span<{ color: string }>`
   color: ${({ color }) => color};
   font-size: 12px;
@@ -169,6 +179,7 @@ const About: React.FC<Props> = ({
           </InfoItem>
         </InfoContainer>
       </InfoContainerWrapper>
+      {abilities != null && <Abilities abilities={abilities} />}
     </Base>
   );
 };
