@@ -32,8 +32,8 @@ const Name = styled.p`
   flex: 1 1 100%;
   color: #374151;
   text-transform: capitalize;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 500;
 `;
 
 const Index = styled.p`

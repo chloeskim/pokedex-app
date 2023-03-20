@@ -11,8 +11,11 @@ const Base = styled.div`
 const Title = styled.h1`
   margin: 0;
   padding: 0;
-  color: #d34f49;
-  font-weight: bold;
+  color: #ffcb05;
+  font-family: 'Kanit', sans-serif;
+  -webkit-text-stroke: 2px #2a75bb;
+  text-shadow: 2px 2px 8px #3c5aa6;
+  font-weight: 900;
 `;
 
 const Description = styled.small`
