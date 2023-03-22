@@ -2,9 +2,20 @@ import React from 'react';
 import styled from '@emotion/styled/macro';
 import usePokemon from './../hooks/usePokemon';
 import { type ListResponse } from './../types/index';
+import { Link } from 'react-router-dom';
 
 const Base = styled.div`
   margin-top: 24px;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const ListItem = styled.li`
@@ -14,14 +25,7 @@ const ListItem = styled.li`
   align-items: center;
   box-shadow: 6px 4px 14px 5px rgba(0, 0, 0, 0.21);
   border-radius: 12px;
-  & + & {
-    margin-top: 18px;
-  }
-`;
-
-const List = styled.ul`
-  margin: 0;
-  padding: 0;
+  margin-top: 18px;
 `;
 
 const Image = styled.img``;
@@ -75,12 +79,13 @@ const PokemonList: React.FC = () => {
       ) : (
         <List>
           {data?.data.results.map((pokemon, idx) => (
-            <ListItem key={pokemon.name}>
-              <Image src={getImageUrl(idx + 1)} />
-              {/* TODO: API */}
-              <Name>{pokemon.name}</Name>
-              <Index>{formatNumbering(idx + 1)}</Index>
-            </ListItem>
+            <StyledLink to={`/${idx + 1}`} key={pokemon.name}>
+              <ListItem>
+                <Image src={getImageUrl(idx + 1)} />
+                <Name>{pokemon.name}</Name>
+                <Index>{formatNumbering(idx + 1)}</Index>
+              </ListItem>
+            </StyledLink>
           ))}
         </List>
       )}
