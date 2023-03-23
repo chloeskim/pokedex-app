@@ -38,6 +38,8 @@
         //     {"allowTypedFunctionExpressions": true},
         // ],
         "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@typescript-eslint/no-floating-promises": "off",
         "prettier/prettier": [
             "error", 
             {
