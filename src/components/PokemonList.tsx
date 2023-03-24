@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from '@emotion/styled/macro';
 import usePokemon from './../hooks/usePokemon';
 import { type ListResponse } from './../types/index';
@@ -64,11 +64,26 @@ const Loading = styled.img``;
 const getImageUrl = (index: number): string =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`;
 
-const PokemonList: React.FC = () => {
+interface Props {
+  searchTerm: string;
+}
+
+const PokemonList: React.FC<Props> = ({ searchTerm }) => {
   const { isLoading, isError, data } = usePokemon<ListResponse>();
   const formatNumbering = (index: number): string => {
     return `#${String(index).padStart(3, '0')}`;
   };
+
+  // Filter the data by the search term
+  const filteredData = useMemo(() => {
+    return (
+      data?.data.results?.filter(pokemon =>
+        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      ) ?? []
+    );
+  }, [data, searchTerm]);
+
+  console.log('*************', filteredData);
 
   return (
     <Base>
@@ -78,12 +93,23 @@ const PokemonList: React.FC = () => {
         </LoadingWrapper>
       ) : (
         <List>
-          {data?.data.results.map((pokemon, idx) => (
-            <StyledLink to={`/${idx + 1}`} key={pokemon.name}>
+          {filteredData.map((pokemon, idx) => (
+            <StyledLink
+              to={`/${pokemon.url.split('/').slice(-2, -1)[0]}`}
+              key={pokemon.name}
+            >
               <ListItem>
-                <Image src={getImageUrl(idx + 1)} />
+                <Image
+                  src={getImageUrl(
+                    Number(pokemon.url.split('/').slice(-2, -1)[0]),
+                  )}
+                />
                 <Name>{pokemon.name}</Name>
-                <Index>{formatNumbering(idx + 1)}</Index>
+                <Index>
+                  {formatNumbering(
+                    Number(pokemon.url.split('/').slice(-2, -1)[0]),
+                  )}
+                </Index>
               </ListItem>
             </StyledLink>
           ))}

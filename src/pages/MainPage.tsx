@@ -1,11 +1,13 @@
 // Pokemon List
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled/macro';
 import PokemonList from '../components/PokemonList';
+import SearchForm from '../components/SearchForm';
 
 const Base = styled.div`
   padding: 12px 18px;
   overflow: hidden;
+  box-sizing: border-box;
 `;
 
 const Title = styled.h1`
@@ -42,6 +44,12 @@ const Image = styled.img`
 `;
 
 const MainPage: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <Base>
       <Title>Pokédex</Title>
@@ -49,7 +57,8 @@ const MainPage: React.FC = () => {
         The Pokédex provides information such as stats regarding the various
         species of Pokémon.
       </Description>
-      <PokemonList />
+      <SearchForm onChange={handleSearchTermChange} />
+      <PokemonList searchTerm={searchTerm} />
       <ImageWrapper>
         <Image src="/assets/pocketball.svg" />
       </ImageWrapper>
